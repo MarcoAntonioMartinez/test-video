@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+
+<style>
+    #video {
+        width: 295px;
+    }
+
+    img {
+        width: 298px;
+    }
+
+    canvas {
+        display: none;
+
+    }
+</style>
+
+<video id="video" autoplay></video>
+<button onclick="captureButton()">Capture</button>
+<canvas
+    id="canvas"
+    style="display: none";
+    >
+</canvas>
+<img id="photo" src="" alt="Captured Photo" />
+
+<script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
+    const photo = document.getElementById("photo");
+
+navigator.mediaDevices
+        .getUserMedia({ video: true})
+        .then(function (stream) {
+            video.srcObject = stream;
+        })
+        .catch(function (err) {
+            console.error("Error accessing the webcam: " + err);
+        });
+
+const captureButton = () => {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataURL = canvas.toDataURL("image/png");
+    photo.src = dataURL;
+};
+
+
+</script>
+
+
+</body>
+</html>
