@@ -34,7 +34,11 @@
     const photo = document.getElementById("photo");
 
 navigator.mediaDevices
-        .getUserMedia({ video: true})
+       .getUserMedia({
+             video: {
+                facingMode: 'environment'
+             }
+            })
         .then(function (stream) {
             video.srcObject = stream;
         })
